@@ -1,0 +1,36 @@
+<head>
+  <title>meteor-tic-tac-toe</title>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+
+<body>
+
+  <h1>Meteor Tic-Tac-Toe</h1>
+
+  {{> user_message}}
+
+  <table class="grid">
+    <tbody>
+      {{#each rows}}  
+        <tr class="grid_row">
+          {{#each columns}}           
+            {{> grid_space}}
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</body>
+
+<template name="user_message">
+  {{#with message}}
+    <h2 class="user_message">
+      {{message}}
+    </h2>
+  {{/with}}
+</template>
+
+<template name="grid_space">
+  <td class="grid_space grid_space_with_{{this.type}}">
+  </td>
+</template>

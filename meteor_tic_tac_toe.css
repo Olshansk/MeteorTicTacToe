@@ -1,0 +1,32 @@
+h1, h2 {
+  text-align: center;
+}
+
+.grid {
+  margin-left: auto;
+  margin-right: auto;
+
+  border-spacing:0;
+}
+
+.grid_space {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  margin: 1px;
+}
+
+.grid_space_with__ {
+  background-color: gray;
+}
+
+.grid_space_with_x {
+  background-color: red;
+}
+
+.grid_space_with_o {
+  background-color: blue;
+}
