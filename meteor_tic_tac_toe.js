@@ -1,3 +1,4 @@
+Alert = new Meteor.Collection("alert")
 TicTacToe = new Mongo.Collection("tic_tac_toe");
 
 var isFirstPlayer = function() {
@@ -9,7 +10,7 @@ var isSecondPlayer = function() {
 };
 
 var getActingPlayer = function() {
-  return TicTacToe.findOne({"player_num": { $gt: 0, $lt: 3}});
+  return TicTacToe.findOne({ player_num: { $gt: 0, $lt: 3 }});
 };
 
 var getActingPlayerNumber = function() {
@@ -21,7 +22,7 @@ var togglePlayerTurn = function() {
   var nextPlayerNum = actingPlayer.player_num == 1 ? 2 : 1;
 
   TicTacToe.update(actingPlayer._id, {
-    $set: { "player_num": nextPlayerNum }
+    $set: { player_num: nextPlayerNum }
   });
 };
 
@@ -58,7 +59,7 @@ var isTie = function() {
 }
 
 if (Meteor.isClient) {
-  
+
   Template.body.helpers({
     rows: [
       { row: 0 },
@@ -126,29 +127,47 @@ if (Meteor.isClient) {
       TicTacToe.insert({ r: row, c: column, type: type });
 
       if (isWinningMove(row, column, type)) {
-        alert("Player " + actingPlayer + " wins!");
-        Meteor.call("resetGame");
+        Meteor.call("resetGame", "Player " + actingPlayer + " wins!");
       } else if (isTie()) {
-        alert("Tie game!");
-        Meteor.call("resetGame");
+        Meteor.call("resetGame", "Tie game!");
       }
     }
+  });
+
+  Meteor.autosubscribe(function() {
+    Alert.find().observe({
+      changed: function(newItem, oldItem) {
+        if (newItem.message != "placeholder") {
+          alert(newItem.message);
+          var alertMessage = Alert.findOne()
+          Alert.update(alertMessage._id, {
+            $set: { message: "placeholder" }
+          });
+        }
+      }
+    });
   });
 }
 
 if (Meteor.isServer) {
+
   Meteor.methods({
-    resetGame: function() { 
+    resetGame: function(message) {
       TicTacToe.remove({});
-      TicTacToe.insert({ "player_num": 1 });
+      TicTacToe.insert({ player_num: 1 });
+
+      var alertMessage = Alert.findOne()
+      Alert.update(alertMessage._id, {
+        $set: { message: message }
+      });
     }
   });
 
   Meteor.startup(function () {
-    var player1Turn = TicTacToe.findOne({"player_num": 1}) !== undefined;
-    var player2Turn = TicTacToe.findOne({"player_num": 2}) !== undefined;
-    if (!player1Turn && !player2Turn) {
-      TicTacToe.insert({"player_num": 1});
-    }
+    TicTacToe.remove({});
+    TicTacToe.insert({ player_num: 1});
+
+    Alert.remove({});
+    Alert.insert({ message:  "placeholder" });
   });
 }
