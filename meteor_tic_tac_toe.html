@@ -9,7 +9,7 @@
 
   {{> user_message}}
 
-  <table class="grid">
+  <table class="grid horizontally-centered">
     <tbody>
       {{#each rows}}  
         <tr class="grid_row">
@@ -20,6 +20,8 @@
       {{/each}}
     </tbody>
   </table>
+
+  {{> reset_button}}
 </body>
 
 <template name="user_message">
@@ -33,4 +35,10 @@
 <template name="grid_space">
   <td class="grid_space grid_space_with_{{this.type}}">
   </td>
+</template>
+
+<template name="reset_button">
+  <button class="horizontally-centered reset-button">
+    Reset Game
+  </button>
 </template>

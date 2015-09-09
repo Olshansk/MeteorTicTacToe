@@ -134,6 +134,23 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.reset_button.events({
+    "click": function() {
+      if (isFirstPlayer()) {
+        message = "Player 1 reset the game."
+      } else if (isSecondPlayer()) {
+        message = "Player 2 reset the game."
+      }
+      Meteor.call("resetGame", message);
+    }
+  });
+
+  Template.reset_button.rendered = function() {
+    if(!isFirstPlayer() && !isSecondPlayer()) {
+      $('.reset-button').hide();
+    }
+  };
+
   Meteor.autosubscribe(function() {
     Alert.find().observe({
       changed: function(newItem, oldItem) {

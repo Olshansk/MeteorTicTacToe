@@ -2,10 +2,12 @@ h1, h2 {
   text-align: center;
 }
 
-.grid {
+.horizontally-centered {
   margin-left: auto;
   margin-right: auto;
+}
 
+.grid {
   border-spacing:0;
 }
 
@@ -29,4 +31,9 @@ h1, h2 {
 
 .grid_space_with_o {
   background-color: blue;
+}
+
+.reset-button {
+  margin-top: 10px;
+  display: block;
 }
