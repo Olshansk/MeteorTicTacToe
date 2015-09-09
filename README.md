@@ -14,5 +14,6 @@ Check out [Meteor Tic-Tac-Toe].
 * Players 1 and 2 must take turns 
 * The game ends (and automatically resets) when one of the players wins or if all the cells have been selected and there is a tie
 * Any paths other than "/player1" or "/player2" can spectate but no participate in the game
+* Players 1 and 2 can reset the game at any point in time. Spectators cannot.
 
 [Meteor Tic-Tac-Toe]: http://meteor_tic_tac_toe.meteor.com
